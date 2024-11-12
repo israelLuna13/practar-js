@@ -101,8 +101,6 @@ function mostrarPlatillos(platillos)
         agregar.classList.add('col-md-2')
         agregar.appendChild(inputCantidad)
 
-        
-
         row.appendChild(nombre)
         row.appendChild(precio)
         row.appendChild(categoria)
@@ -115,35 +113,148 @@ function agregarPlatillo(producto)
 {
     //get currenty product
     let {pedido} = cliente
-    //check if score is > 0
+    //check if amount is > 0
     if(producto.cantidad > 0)
     {
         //check if element exist in array
         if(pedido.some(p => p.id === producto.id)){
-            //update score
+            //update amount
+            //map return nuevo array
             const pedidoActualizado = pedido.map( p => {
                 if(p.id === producto.id){
                     p.cantidad = producto.cantidad
-
                 }
+
                 return p
             })
-            //put new element in aeeay cliente.pedido
+            //put new element in array cliente.pedido
+            // we take copy that data in cliente and add new 
             cliente.pedido = [...pedidoActualizado]
 
         }else{
             //create new element in the array
             cliente.pedido = [...pedido,producto]
         }
-        
-
     }else
     {
-        console.log('No es mayor a 0');
-        
+        //delete when amount is 0
+        //filter return elements that we don't want delete
+        const resultado = pedido.filter( elem => elem.id !== producto.id)
+        cliente.pedido=[...resultado]        
     }
-    console.log(cliente.pedido);
-    
+    //clear html previusly
+    limpiarHTML()
 
-    
+    //show order
+    actualizarResumen()
+}
+
+function actualizarResumen(){
+    const contenido = document.querySelector('#resumen .contenido')
+
+    const resumen = document.createElement('div')
+    resumen.classList.add('col-md-6','card','py-5','px-3','shadow')
+//mesa
+    const mesa = document.createElement('p')
+    mesa.textContent = 'Mesa'
+    mesa.classList.add('fw-bold')
+
+    const mesaSpan = document.createElement('div')
+    mesaSpan.textContent = cliente.mesa
+    mesaSpan.classList.add('fw-bold')
+
+    //hour 
+    const hora = document.createElement('p')
+    hora.textContent = 'Hora'
+    hora.classList.add('fw-bold')
+
+    const horaSpan = document.createElement('div')
+    horaSpan.textContent = cliente.hora
+    horaSpan.classList.add('fw-bold')
+
+    mesa.appendChild(mesaSpan)
+    hora.appendChild(horaSpan)
+
+    //title section
+    const heading = document.createElement('h3')
+    heading.textContent = 'Platillos Consumidos'
+    heading.classList.add('my-4','text-center')
+
+    //show ordes
+    const grupo = document.createElement('ul')
+    grupo.classList.add('list-group')
+
+    const{pedido} = cliente;
+
+    pedido.forEach(articulo => {
+        const {nombre,cantidad,precio,id} = articulo
+        const lista = document.createElement('li')
+        lista.classList.add('list-group-item')
+
+        const nombreEl= document.createElement('h4')
+        nombreEl.classList.add('my-4')
+        nombreEl.textContent = nombre
+
+        //
+        const cantidadEle = document.createElement('p')
+        cantidadEle.classList.add('fw-bold')
+        cantidadEle.textContent = 'Cantidad:'
+
+        const cantidadValor = document.createElement('span')
+        cantidadValor.classList.add('fw-normal')
+        cantidadValor.textContent = cantidad
+
+          //price
+          const precioEle = document.createElement('p')
+          precioEle.classList.add('fw-bold')
+          precioEle.textContent = 'Precio:'
+  
+          const precioValor = document.createElement('span')
+          precioValor.classList.add('fw-normal')
+          precioValor.textContent = `$${precio}`
+
+          //sub amount
+          const subtotalEl = document.createElement('p')
+          subtotalEl.classList.add('fw-bold')
+          subtotalEl.textContent = 'Subtotal:'
+  
+          const subTotalValor = document.createElement('span')
+          subTotalValor.classList.add('fw-normal')
+          subTotalValor.textContent = calcularSubtotal(precio,cantidad)
+
+        //add value a her containers
+        cantidadEle.appendChild(cantidadValor)
+        precioEle.appendChild(precioValor)
+        subtotalEl.appendChild(subTotalValor)
+
+
+        //add elemt to LI
+        lista.appendChild(nombreEl)
+        lista.appendChild(cantidadEle)
+        lista.appendChild(precioEle)
+        lista.appendChild(subtotalEl)
+
+        //add list to group
+        grupo.appendChild(lista)
+    })
+     
+    resumen.appendChild(mesa)
+    resumen.appendChild(hora)
+    resumen.appendChild(heading)
+    resumen.appendChild(grupo)
+
+    contenido.appendChild(resumen)
+}
+
+function limpiarHTML(){
+    const contenido = document.querySelector('#resumen .contenido')
+    while(contenido.firstChild)
+    {
+        contenido.removeChild(contenido.firstChild)
+    }
+}
+function calcularSubtotal( precio,cantidad)
+{
+    return `$ ${precio*cantidad}`
+
 }
