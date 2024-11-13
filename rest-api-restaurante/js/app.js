@@ -145,15 +145,23 @@ function agregarPlatillo(producto)
     //clear html previusly
     limpiarHTML()
 
-    //show order
-    actualizarResumen()
+    if(cliente.pedido.length)
+    {
+            //show order
+        actualizarResumen()
+
+    }else{
+        mensahePedidoVacio
+    }
+
+
 }
 
 function actualizarResumen(){
     const contenido = document.querySelector('#resumen .contenido')
 
     const resumen = document.createElement('div')
-    resumen.classList.add('col-md-6','card','py-5','px-3','shadow')
+    resumen.classList.add('col-md-6','card','py-3','px-3','shadow')
 //mesa
     const mesa = document.createElement('p')
     mesa.textContent = 'Mesa'
@@ -222,6 +230,16 @@ function actualizarResumen(){
           subTotalValor.classList.add('fw-normal')
           subTotalValor.textContent = calcularSubtotal(precio,cantidad)
 
+          //btn delete
+          const btnEliminar = document.createElement('button')
+          btnEliminar.classList.add('btn','btn-danger')
+          btnEliminar.textContent  = 'Eliminar pedido'
+
+          //function delete order
+          btnEliminar.onclick = function(){
+            eliminarPedido(id)
+          }
+
         //add value a her containers
         cantidadEle.appendChild(cantidadValor)
         precioEle.appendChild(precioValor)
@@ -233,17 +251,21 @@ function actualizarResumen(){
         lista.appendChild(cantidadEle)
         lista.appendChild(precioEle)
         lista.appendChild(subtotalEl)
+        lista.appendChild(btnEliminar)
 
         //add list to group
         grupo.appendChild(lista)
     })
      
+    resumen.appendChild(heading)
     resumen.appendChild(mesa)
     resumen.appendChild(hora)
-    resumen.appendChild(heading)
     resumen.appendChild(grupo)
 
     contenido.appendChild(resumen)
+
+    //show form 
+    formularioPropinas()
 }
 
 function limpiarHTML(){
@@ -257,4 +279,118 @@ function calcularSubtotal( precio,cantidad)
 {
     return `$ ${precio*cantidad}`
 
+}
+
+function eliminarPedido(id)
+{
+    const {pedido} =cliente
+    const resultado = pedido.filter( elem => elem.id !== id)
+    cliente.pedido=[...resultado]   
+    limpiarHTML()
+    if(cliente.pedido.length)
+        {
+                //show order
+            actualizarResumen()
+    
+        }else{
+            mensahePedidoVacio()
+        }   
+
+        //produc has deleted 
+        const productoEliminado = `#producto-${id}`
+        const inputEliminado = document.querySelector(productoEliminado)
+
+        inputEliminado.value = 0 
+        console.log('producto eliminado',productoEliminado);
+        
+}
+function mensahePedidoVacio(){
+    const contenido = document.querySelector('#resumen .contenido')
+
+    const texto = document.createElement('p')
+    texto.classList.add('text-center')
+    texto.textContent='Añade los productos del pedido'
+
+    contenido.appendChild(texto)
+}
+function formularioPropinas(){
+    const contenido = document.querySelector('#resumen .contenido')
+    const formulario= document.createElement('div')
+    formulario.classList.add('col-md-6' , 'formulario')
+
+    const divFormulario = document.createElement('div')
+    divFormulario.classList.add('card','py-2','px-3','shadow')
+
+
+
+    const heading = document.createElement('h3')
+    heading.classList.add('my-4','text-center')
+    heading.textContent = 'Propina'
+
+    //button radio 10%
+    const radio10 = document.createElement('input')
+    radio10.type='radio'
+    radio10.name = 'propina'
+    radio10.value= '10'
+    radio10.classList.add('form-check-input')
+
+    const radio10Label = document.createElement('label')
+    radio10Label.textContent = '10%'
+    radio10Label.classList.add('form-check-label')
+
+    const radio10Div =document.createElement('div')
+    radio10Div.classList.add('form-check')
+
+
+    radio10Div.appendChild(radio10)
+    radio10Div.appendChild(radio10Label)
+
+      //button radio 25%
+      const radio25 = document.createElement('input')
+      radio25.type='radio'
+      radio25.name = 'propina'
+      radio25.value= '25'
+      radio25.classList.add('form-check-input')
+  
+      const radio25Label = document.createElement('label')
+      radio25Label.textContent = '25%'
+      radio25Label.classList.add('form-check-label')
+  
+      const radio25Div =document.createElement('div')
+      radio25Div.classList.add('form-check')
+  
+  
+      radio25Div.appendChild(radio25)
+      radio25Div.appendChild(radio25Label)
+
+
+          //button radio 50%
+          const radio50 = document.createElement('input')
+          radio50.type='radio'
+          radio50.name = 'propina'
+          radio50.value= '50'
+          radio50.classList.add('form-check-input')
+      
+          const radio50Label = document.createElement('label')
+          radio50Label.textContent = '50%'
+          radio50Label.classList.add('form-check-label')
+      
+          const radio50Div =document.createElement('div')
+          radio50Div.classList.add('form-check')
+      
+      
+          radio50Div.appendChild(radio50)
+          radio50Div.appendChild(radio50Label)
+
+    //add to div
+    divFormulario.appendChild(heading)
+
+    //add to form
+    divFormulario.appendChild(heading)
+    divFormulario.appendChild(radio10Div)
+    divFormulario.appendChild(radio25Div)
+    divFormulario.appendChild(radio50Div)
+    formulario.appendChild(divFormulario)
+    contenido.appendChild(formulario)
+    
 }
