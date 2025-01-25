@@ -1,0 +1,18 @@
+{
+  "clientes": [
+    {
+      "id": "6148",
+      "name": "daniela",
+      "email": "isra@gmail.com",
+      "phone": "123456",
+      "company": "tyson"
+    },
+    {
+      "name": "nay",
+      "email": "nay@gmail.com",
+      "phone": "123456",
+      "company": "jonh",
+      "id": "ad8b"
+    }
+  ]
+}
