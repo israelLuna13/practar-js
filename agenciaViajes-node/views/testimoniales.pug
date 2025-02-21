@@ -1,0 +1,21 @@
+extends ./layout/index
+block contenido
+    main.container.mt-5
+        h1.text-center.mt-5 #{page}
+        div.row
+            h2.d-block.w-100.col.text-center Add testiomonial
+
+        div.row.justify-content-center
+            .col-md-8
+                form(action="/testimoniales" method="POST")
+                    .form-group
+                        label(for="name") Name
+                        input#name(type="text" , placeholder="Your name", name="name", class='form-control') 
+                    .form-group
+                        label(for="name") Email
+                        input#email(type="email" , placeholder="Your email", name="email", class='form-control')
+                    .form-group
+                        label(for="message") Message
+                        textarea#message( placeholder="Your message", name="message", class='form-control', rows=3)
+
+                    input(type="submit" ,class="btn btn-success btn-block")     
