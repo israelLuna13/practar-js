@@ -4,6 +4,7 @@ import router from './routes/router.js';
 import db from './config/db.js';
 
 const app = express()
+
 //connect to database
 db.authenticate()
     .then(()=> console.log(colors.black.bgGreen(`Database's working`)))

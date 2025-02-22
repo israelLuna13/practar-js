@@ -2,20 +2,35 @@ extends ./layout/index
 block contenido
     main.container.mt-5
         h1.text-center.mt-5 #{page}
+
+        blockquote.text-center Read about us customers experiences and feel them
+        if testimoniales.length
+            include ./layout/blockTestimoniales
+        else
+            blockquote.text-center There aren't messages 
+         
+            
+
+     
         div.row
             h2.d-block.w-100.col.text-center Add testiomonial
+            
+            div.col-md-12
+                if(errores)
+                    each error in errores
+                        div.alert.col.alert-danger.text-center= error.message
 
         div.row.justify-content-center
             .col-md-8
                 form(action="/testimoniales" method="POST")
                     .form-group
                         label(for="name") Name
-                        input#name(type="text" , placeholder="Your name", name="name", class='form-control') 
+                        input#name(type="text" , placeholder="Your name", name="name", class='form-control',value=name) 
                     .form-group
                         label(for="name") Email
-                        input#email(type="email" , placeholder="Your email", name="email", class='form-control')
+                        input#email(type="email" , placeholder="Your email", name="email", class='form-control', value=email)
                     .form-group
                         label(for="message") Message
-                        textarea#message( placeholder="Your message", name="message", class='form-control', rows=3)
+                        textarea#message( placeholder="Your message", name="message", class='form-control', rows=3)= message
 
                     input(type="submit" ,class="btn btn-success btn-block")     

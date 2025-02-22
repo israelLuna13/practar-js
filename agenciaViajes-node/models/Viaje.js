@@ -28,7 +28,7 @@ export const Viaje = db.define('viajes',{
     }
 },
 {
-    timestamps: false, // 👈 Deshabilita los timestamps
-    tableName: "viajes", // 👈 Asegura que Sequelize use el nombre correcto de la tabla
+    timestamps: false,
+    tableName: "viajes",
   }
 )

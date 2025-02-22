@@ -1,5 +1,41 @@
 extends ./layout/index
+
+block slider
+
+    div.slider
+        h1 Rio de janeiro
+        em Aventura 
+
 block contenido
     main.container.mt-5
-        div.row
-            h1= pagina
+        h2.text-center.mbt About us
+        div.row.mb-5
+            div.col-md-6
+                p Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse dignissim tempus finibus. Maecenas quis malesuada ipsum. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam tempus neque in placerat vulputate. Suspendisse volutpat arcu felis, in porta massa pellentesque et. 
+                  Maecenas maximus, sem sed viverra mattis, est risus dapibus sapien, in imperdiet mi mauris tempor nulla. Suspendisse dignissim faucibus risus, ut volutpat lectus. Integer nisl nunc, ornare et convallis a, scelerisque ac metus. Fusce in sapien a quam condimentum venenatis. Maecenas euismod 
+                
+                p Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse dignissim tempus finibus. Maecenas quis malesuada ipsum. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam tempus neque in placerat vulputate. Suspendisse volutpat arcu felis, in porta massa pellentesque et. 
+                  Maecenas maximus, sem sed viverra mattis, est risus dapibus sapien, in imperdiet mi mauris tempor nulla. Suspendisse dignissim faucibus risus, ut volutpat lectus. Integer nisl nunc, ornare et convallis a, scelerisque ac metus. Fusce in sapien a quam condimentum venenatis. Maecenas euismod 
+                
+            div.col-md-6
+                img(src="/img/inicio_nosotros.jpg", alt="Image us", class="img-fuid")
+
+        include ./layout/blockTravel
+    
+    div.descuento
+        div.container
+            div.row
+                div.col-md-6
+                    div.contenido
+                        h3 5% Descuento 
+                        p.titulo Trip to Canada
+                        p.fecha 20 de Marxo de 2026 - 28 de marzo de 2026
+                        p.precio $5,900
+
+    div.container
+        h2.mt-5.text-center Testimoniales
+
+         if testimoniales.length
+            include ./layout/blockTestimoniales
+         else
+            p.text-center There aren't messages 
